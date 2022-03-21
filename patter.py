@@ -16,6 +16,10 @@ pat_frames = [
     Image.open("./img/pet9.gif").convert("RGBA")
 ]
 
+
+#getPat takes a directory or a file-like stream
+#returns a BytesIO stream
+#format can be "webp" or "gif" (transparency is borked for gifs so be aware)
 def getPat(avatar_file, format="webp"):
     avatar_x = 5
     avatar_y = 5
@@ -79,6 +83,10 @@ def getPat(avatar_file, format="webp"):
 
 
 if __name__ == "__main__":
-    stream = getPat("./img/avatar.png", "webp")
+    #getPat takes a path or a file-like stream
+    #returns a BytesIO stream
+    #output format can be "webp" or "gif" (transparency is borked for gifs so be aware)
+    stream = getPat(open("./img/avatar.png", "rb"), "webp")
+    #stream = getPat("./img/avatar.png", "webp")
     stream.seek(0)
     open("test.webp", "wb").write(stream.read())
