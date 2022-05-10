@@ -1,6 +1,7 @@
 import math
 from PIL import Image
 import io
+from shitty_pillow import save_transparent_gif
 
 # preload the pictures because i am a GOOD programmer who cares about performance
 pat_frames = [
@@ -71,16 +72,18 @@ def getPat(avatar_file, format="webp"):
         frame.paste(pat_frames[i], (hand_x, hand_y), pat_frames[i])
         frames.append(frame)
     
+
     output = io.BytesIO()
-    frames[0].save(output, format, 
-        save_all = True,
-        append_images = frames[1:],
-        duration = delay,
-        loop = 0
-    )
+    if (format == "gif"):
+        save_transparent_gif(frames, delay, output)
+    else:    
+        frames[0].save(output, format, 
+            save_all = True,
+            append_images = frames[1:],
+            duration = delay,
+            loop = 0
+        )
     return output
-
-
 
 if __name__ == "__main__":
     #getPat takes a path or a file-like stream
